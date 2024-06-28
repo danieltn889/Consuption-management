@@ -32,11 +32,11 @@ public class NewLogConsuptionActivity extends AppCompatActivity {
         addConsuption.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String[] consuptionType = new String[]{"Water", "Food", "Exercises"};
-                adapter=new ArrayAdapter<>(getApplication(), android.R.layout.simple_spinner_item,consuptionType);
+                ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getApplicationContext(),R.array.consuption,android.R.layout.simple_spinner_item);
                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinnerConsuption.setAdapter(adapter);
-                String type = spinnerConsuption.getSelectedItem().toString();
+
+
             }
         });
 
