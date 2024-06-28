@@ -13,33 +13,45 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Locale;
 
 public class NewLogConsuptionActivity extends AppCompatActivity {
-    EditText editQunatity,editUnitPrice;
+    EditText editQunatity, editUnitPrice;
     Spinner spinnerConsuption;
     Button addConsuption;
     ArrayAdapter<String> adapter;
+    DatabaseHelper databaseHelper;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_new_log_consuption);
-        editQunatity=findViewById(R.id.editQuantity);
-        editUnitPrice=findViewById(R.id.editUnityPrice);
-        addConsuption=findViewById(R.id.addConsuptionButton);
-        spinnerConsuption=findViewById(R.id.editType);
+
+        editQunatity = findViewById(R.id.editQuantity);
+        editUnitPrice = findViewById(R.id.editUnityPrice);
+        addConsuption = findViewById(R.id.addConsuptionButton);
+        spinnerConsuption = findViewById(R.id.editType);
+
+        adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, getResources().getStringArray(R.array.consuption));
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerConsuption.setAdapter(adapter);
+
         addConsuption.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getApplicationContext(),R.array.consuption,android.R.layout.simple_spinner_item);
-                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                spinnerConsuption.setAdapter(adapter);
+                String  type=spinnerConsuption.getSelectedItem().toString();
+                String  qty=editQunatity.getText().toString();
+                String  price=editUnitPrice.getText().toString();
+                String date = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
+                double quantity=Double.parseDouble(qty);
+                double unit_Price=Double.parseDouble(price);
 
 
             }
         });
-
-
     }
 }
