@@ -36,6 +36,7 @@ public class NewLogConsuptionActivity extends AppCompatActivity {
                 adapter=new ArrayAdapter<>(getApplication(), android.R.layout.simple_spinner_item,consuptionType);
                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinnerConsuption.setAdapter(adapter);
+                String type = spinnerConsuption.getSelectedItem().toString();
             }
         });
 

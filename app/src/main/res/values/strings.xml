@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">21RP03122Truck Expenses</string>
+    <string-array name="consuption">
+        <item>Water</item>
+        <item>Airtime</item>
+        <item>Traval</item>
+        <item>Meal</item>
+    </string-array>
 </resources>
