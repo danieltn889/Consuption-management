@@ -45,7 +45,7 @@
         android:layout_margin="10dp"
         android:hint="Enter Unity Price"/>
     <Button
-        android:id="@+id/addConsuptionButton";
+        android:id="@+id/addConsuptionButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"

@@ -2,6 +2,7 @@ package com.example.a21rp03122;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -12,10 +13,13 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import java.util.ArrayList;
+
 public class NewLogConsuptionActivity extends AppCompatActivity {
     EditText editQunatity,editUnitPrice;
     Spinner spinnerConsuption;
     Button addConsuption;
+    ArrayAdapter<String> adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,10 +28,14 @@ public class NewLogConsuptionActivity extends AppCompatActivity {
         editQunatity=findViewById(R.id.editQuantity);
         editUnitPrice=findViewById(R.id.editUnityPrice);
         addConsuption=findViewById(R.id.addConsuptionButton);
+        spinnerConsuption=findViewById(R.id.editType);
         addConsuption.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                String[] consuptionType = new String[]{"Water", "Food", "Exercises"};
+                adapter=new ArrayAdapter<>(getApplication(), android.R.layout.simple_spinner_item,consuptionType);
+                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spinnerConsuption.setAdapter(adapter);
             }
         });
 
