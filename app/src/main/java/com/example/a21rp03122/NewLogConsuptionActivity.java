@@ -54,10 +54,11 @@ public class NewLogConsuptionActivity extends AppCompatActivity {
                 double unit_Price=Double.parseDouble(price);
                 Boolean result=databaseHelper.insertData(type,quantity,unit_Price,date);
                 if (result){
-                    Toast.makeText(getApplicationContext(),"Consuption Saved",Toast.LENGTH_LONG);
+                    Toast.makeText(getApplicationContext(),"Consumption Saved",Toast.LENGTH_LONG).show();
                     startActivity(new Intent(getApplicationContext(),MainActivity.class));
                 }else{
-                    Toast.makeText(getApplicationContext(),"Consuption Fail to save",Toast.LENGTH_LONG);
+                    Toast.makeText(getApplicationContext(),"Consumption Failed to save",Toast.LENGTH_LONG).show();
+
                 }
 
             }
