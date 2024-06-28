@@ -1,11 +1,13 @@
 package com.example.a21rp03122;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -39,6 +41,7 @@ public class NewLogConsuptionActivity extends AppCompatActivity {
         adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, getResources().getStringArray(R.array.consuption));
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerConsuption.setAdapter(adapter);
+        databaseHelper=new DatabaseHelper(getApplicationContext());
 
         addConsuption.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -49,7 +52,13 @@ public class NewLogConsuptionActivity extends AppCompatActivity {
                 String date = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
                 double quantity=Double.parseDouble(qty);
                 double unit_Price=Double.parseDouble(price);
-
+                Boolean result=databaseHelper.insertData(type,quantity,unit_Price,date);
+                if (result){
+                    Toast.makeText(getApplicationContext(),"Consuption Saved",Toast.LENGTH_LONG);
+                    startActivity(new Intent(getApplicationContext(),MainActivity.class));
+                }else{
+                    Toast.makeText(getApplicationContext(),"Consuption Fail to save",Toast.LENGTH_LONG);
+                }
 
             }
         });
