@@ -63,9 +63,9 @@ public class ViewLogsConsuptionActivity extends AppCompatActivity {
             row.addView(dateTextView);
 
             double totalRowPrice = cursor.getDouble(2) * cursor.getDouble(3);
-            TextView totalPriceTextView = new TextView(this);
-            totalPriceTextView.setText(String.valueOf(totalRowPrice));
-            row.addView(totalPriceTextView);
+            TextView totalRowPriceTextView = new TextView(this);
+            totalRowPriceTextView.setText(String.valueOf(totalRowPrice));
+            row.addView(totalRowPriceTextView);
 
             Button editButton = new Button(this);
             editButton.setText("Edit");
