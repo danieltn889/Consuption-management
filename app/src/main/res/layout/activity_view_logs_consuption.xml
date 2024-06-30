@@ -1,19 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="50dp"
-    tools:context=".ViewLogsConsuptionActivity">
-    <TextView
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <ScrollView
         android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+        <TableLayout
+            android:id="@+id/tableLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:stretchColumns="1">
+            <!-- Header Row -->
+            <TableRow>
+                <TextView android:layout_column="0" android:text="ID" android:padding="5dp" android:textStyle="bold"/>
+                <TextView android:layout_column="1" android:text="Type" android:padding="5dp" android:textStyle="bold"/>
+                <TextView android:layout_column="2" android:text="Quantity" android:padding="5dp" android:textStyle="bold"/>
+                <TextView android:layout_column="3" android:text="Unit Price" android:padding="5dp" android:textStyle="bold"/>
+                <TextView android:layout_column="4" android:text="Date" android:padding="5dp" android:textStyle="bold"/>
+                <TextView android:layout_column="5" android:text="Total Price" android:padding="5dp" android:textStyle="bold"/>
+                <TextView android:layout_column="6" android:text="Edit" android:padding="5dp" android:textStyle="bold"/>
+                <TextView android:layout_column="7" android:text="Delete" android:padding="5dp" android:textStyle="bold"/>
+            </TableRow>
+        </TableLayout>
+    </ScrollView>
+
+    <TextView
+        android:id="@+id/totalPriceTextView"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="List of All Consuptions"/>
-    <TextView
-        android:id="@+id/logsTextView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:paddingTop="16dp"
+        android:textStyle="bold" />
+
 </LinearLayout>

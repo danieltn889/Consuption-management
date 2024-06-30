@@ -1,17 +1,20 @@
 package com.example.a21rp03122;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 public class ViewLogsConsuptionActivity extends AppCompatActivity {
-    private TextView logsTextView;
+    private TableLayout tableLayout;
+    private TextView totalPriceTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,31 +22,76 @@ public class ViewLogsConsuptionActivity extends AppCompatActivity {
         setContentView(R.layout.activity_view_logs_consuption);
 
         // Initialize views
-        logsTextView = findViewById(R.id.logsTextView);
+        tableLayout = findViewById(R.id.tableLayout);
+        totalPriceTextView = findViewById(R.id.totalPriceTextView);
 
         DatabaseHelper databaseHelper = new DatabaseHelper(getApplicationContext());
         Cursor cursor = databaseHelper.getAllData();
 
         if (cursor.getCount() == 0) {
-            logsTextView.setText("No data found");
+            TableRow noDataRow = new TableRow(this);
+            TextView noDataTextView = new TextView(this);
+            noDataTextView.setText("No data found");
+            noDataRow.addView(noDataTextView);
+            tableLayout.addView(noDataRow);
             return;
         }
 
-        StringBuilder logs = new StringBuilder();
         double totalPrice = 0.0;
 
         while (cursor.moveToNext()) {
-            logs.append("ID: ").append(cursor.getString(0)).append("\n")
-                    .append("Type: ").append(cursor.getString(1)).append("\n")
-                    .append("Quantity: ").append(cursor.getString(2)).append("\n")
-                    .append("Unit Price: ").append(cursor.getString(3)).append("\n")
-                    .append("Date: ").append(cursor.getString(4)).append("\n").append("Total Price").append(cursor.getDouble(2) * cursor.getDouble(3)).append("\n\n");
+            TableRow row = new TableRow(this);
 
-            totalPrice += cursor.getDouble(2) * cursor.getDouble(3);
+            TextView idTextView = new TextView(this);
+            idTextView.setText(cursor.getString(0));
+            row.addView(idTextView);
+
+            TextView typeTextView = new TextView(this);
+            typeTextView.setText(cursor.getString(1));
+            row.addView(typeTextView);
+
+            TextView quantityTextView = new TextView(this);
+            quantityTextView.setText(cursor.getString(2));
+            row.addView(quantityTextView);
+
+            TextView unitPriceTextView = new TextView(this);
+            unitPriceTextView.setText(cursor.getString(3));
+            row.addView(unitPriceTextView);
+
+            TextView dateTextView = new TextView(this);
+            dateTextView.setText(cursor.getString(4));
+            row.addView(dateTextView);
+
+            double totalRowPrice = cursor.getDouble(2) * cursor.getDouble(3);
+            TextView totalPriceTextView = new TextView(this);
+            totalPriceTextView.setText(String.valueOf(totalRowPrice));
+            row.addView(totalPriceTextView);
+
+            Button editButton = new Button(this);
+            editButton.setText("Edit");
+            editButton.setOnClickListener(view -> {
+                Intent intent = new Intent(ViewLogsConsuptionActivity.this, EditRecordActivity.class);
+                intent.putExtra("ID", cursor.getInt(0));
+                startActivity(intent);
+            });
+            row.addView(editButton);
+
+            Button deleteButton = new Button(this);
+            deleteButton.setText("Delete");
+            deleteButton.setOnClickListener(view -> {
+                int id = cursor.getInt(0);
+                databaseHelper.deleteData(id);
+                Toast.makeText(ViewLogsConsuptionActivity.this, "Record Deleted", Toast.LENGTH_SHORT).show();
+                recreate(); // Refresh the activity to reflect the changes
+            });
+            row.addView(deleteButton);
+
+            tableLayout.addView(row);
+
+            totalPrice += totalRowPrice;
         }
 
-        logs.append("Total Price: ").append(totalPrice).append(" RWF");
-        logsTextView.setText(logs.toString());
+        totalPriceTextView.setText("Total Price: " + totalPrice + " RWF");
 
         // Close cursor after use
         cursor.close();
